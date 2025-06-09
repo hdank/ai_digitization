@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ai_digitization_template_user,ai_digitization.template.user,model_ai_digitization_template,base.group_user,1,0,0,0
+access_ai_digitization_field_mapping_user,ai_digitization.field.mapping.user,model_ai_digitization_field_mapping,base.group_user,1,0,0,0
+access_ai_digitization_processor_user,ai_digitization.processor.user,model_ai_digitization_processor,base.group_user,1,1,1,1
+access_ai_digitization_template_manager,ai_digitization.template.manager,model_ai_digitization_template,base.group_system,1,1,1,1
+access_ai_digitization_field_mapping_manager,ai_digitization.field.mapping.manager,model_ai_digitization_field_mapping,base.group_system,1,1,1,1

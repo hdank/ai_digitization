@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- AI Digitization Field Mapping Form View -->
+    <record id="view_ai_digitization_field_mapping_form" model="ir.ui.view">
+        <field name="name">ai_digitization.field.mapping.form</field>
+        <field name="model">ai_digitization.field.mapping</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Field Mapping">
+                <sheet>
+                    <group>
+                        <field name="template_id" invisible="context.get('hide_template_id', False)"/>
+                        <field name="field_type"/>
+                        <field name="target_field_id"/>
+                        <field name="label"/>
+                        <field name="example_value"/>
+                        <field name="default_value"/>
+                        <field name="ai_fetch"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- AI Digitization Field Mapping Tree View -->
+    <record id="view_ai_digitization_field_mapping_tree" model="ir.ui.view">
+        <field name="name">ai_digitization.field.mapping.tree</field>
+        <field name="model">ai_digitization.field.mapping</field>
+        <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="field_type"/>
+                <field name="target_field_id"/>
+                <field name="label"/>
+                <field name="example_value"/>
+                <field name="default_value"/>
+                <field name="ai_fetch"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- AI Digitization Template Form View -->
+    <record id="view_ai_digitization_template_form" model="ir.ui.view">
+        <field name="name">ai_digitization.template.form</field>
+        <field name="model">ai_digitization.template</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="AI Digitization Template">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="model_id"/>
+                            <field name="model_name" invisible="1"/>
+                            <field name="document_type"/>
+                            <field name="prompt_template"/>
+                            <field name="ai_model"/>
+                            <field name="api_key" password="True"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Field Mappings">
+                            <field name="field_mappings" context="{'hide_template_id': True}">
+                                <list>
+                                    <field name="field_type"/>
+                                    <field name="label"/>
+                                    <field name="target_field_id"/>
+                                    <field name="example_value"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Prompt">
+                            <group string="Prompt Template Selection">
+                                <group>
+                                    <field name="prompt_template" widget="radio" options="{'horizontal': true}"/>
+                                </group>
+                            </group>
+                            
+                            <group string="Predefined Templates" invisible="prompt_template == 'custom'">
+                                <div class="alert alert-info" role="alert">
+                                    <strong>Selected Template: </strong>
+                                    <span invisible="prompt_template != 'general'">General Document Extraction - Extracts all relevant information from any document type</span>
+                                    <span invisible="prompt_template != 'handwritten'">Handwritten Text Recognition - Specialized for handwritten content with high accuracy</span>
+                                    <span invisible="prompt_template != 'invoice'">Invoice/Receipt Processing - Structured extraction for financial documents</span>
+                                    <span invisible="prompt_template != 'form'">Form Data Extraction - Optimized for filled-in forms and labeled fields</span>
+                                </div>
+                            </group>
+                            
+                            <group string="Custom Prompt" invisible="prompt_template != 'custom'">
+                                <div class="alert alert-warning" role="alert">
+                                    <strong>Custom Prompt Mode:</strong> Write your own prompt for specialized document processing. 
+                                    Make sure to include instructions for JSON output format.
+                                </div>
+                                <field name="prompt_text" 
+                                       placeholder="Enter your custom prompt here. Example:&#10;&#10;Analyze this document and extract:&#10;- Field 1: Description&#10;- Field 2: Description&#10;&#10;Return the data as JSON with the following structure:&#10;{&#10;  &quot;field1&quot;: &quot;value&quot;,&#10;  &quot;field2&quot;: &quot;value&quot;&#10;}" 
+                                       widget="text" 
+                                       rows="8"/>
+                            </group>
+                            
+                            <group string="Final Prompt Preview">
+                                <div class="alert alert-light" role="alert">
+                                    <small class="text-muted">This is the actual prompt that will be sent to the AI model:</small>
+                                </div>
+                                <field name="final_prompt" widget="text" readonly="1" rows="10" class="o_field_text"/>
+                            </group>
+                        </page>
+                        <page string="Test Document Processing">
+                            <group string="Upload and Process Document">
+                                <group>
+                                    <label for="test_document" string="Upload Document"/>
+                                    <div>
+                                        <field name="test_document" filename="test_document_filename" widget="binary"/>
+                                        <field name="test_document_filename" invisible="1"/>
+                                    </div>
+                                    <field name="test_document_mimetype" invisible="1"/>
+                                </group>
+                                <group>
+                                    <button name="process_test_document" 
+                                            string="Process Document" 
+                                            type="object" 
+                                            class="oe_highlight"
+                                            invisible="not test_document"
+                                            confirm="Process this document with the current template?"/>
+                                    <button name="create_processor_record" 
+                                            string="Create Processor Record" 
+                                            type="object" 
+                                            class="btn-secondary"
+                                            invisible="not test_document"/>
+                                </group>
+                            </group>
+                            <group string="Processing Results" invisible="not test_extracted_data">
+                                <field name="test_extracted_data" widget="ace" options="{'mode': 'json'}" readonly="1" string="Extracted Data"/>
+                                <field name="test_processing_state" readonly="1" string="Processing State"/>
+                                <field name="test_error_message" readonly="1" string="Error Message" invisible="not test_error_message" widget="text"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- AI Digitization Template Tree View -->
+    <record id="view_ai_digitization_template_tree" model="ir.ui.view">
+        <field name="name">ai_digitization.template.tree</field>
+        <field name="model">ai_digitization.template</field>
+        <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="model_id"/>
+                <field name="document_type"/>
+                <field name="prompt_template"/>
+                <field name="ai_model"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- AI Digitization Processor Form View -->
+    <record id="view_ai_digitization_processor_form" model="ir.ui.view">
+        <field name="name">ai_digitization.processor.form</field>
+        <field name="model">ai_digitization.processor</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="AI Document Processor">
+                <header>
+                    <button name="process_document" string="Process Document" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,processing,done"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="template_id" options="{'no_create': True, 'no_edit': True}"/>
+                            <field name="document" filename="document_filename"/>
+                            <field name="document_filename" invisible="1"/>
+                            <field name="document_mimetype" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="record_model" readonly="1" invisible="not record_id"/>
+                            <field name="record_id" readonly="1" invisible="not record_id"/>
+                            <field name="error_message" readonly="1" invisible="not error_message" widget="text"/>
+                        </group>
+                    </group>
+                    <group invisible="not template_id" string="Template Information">
+                        <field name="template_id" readonly="1" nolabel="1" options="{'no_open': True}"/>
+                    </group>
+                    <notebook>
+                        <page string="Extracted Data">
+                            <field name="extracted_data" widget="ace" options="{'mode': 'json'}" readonly="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- AI Digitization Processor Tree View -->
+    <record id="view_ai_digitization_processor_tree" model="ir.ui.view">
+        <field name="name">ai_digitization.processor.tree</field>
+        <field name="model">ai_digitization.processor</field>
+        <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="template_id"/>
+                <field name="state"/>
+                <field name="record_id"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Menu and Action for AI Digitization Template -->
+    <record id="action_ai_digitization_template" model="ir.actions.act_window">
+        <field name="name">OCR Template</field>
+        <field name="res_model">ai_digitization.template</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Menu and Action for AI Digitization Processor -->
+    <record id="action_ai_digitization_processor" model="ir.actions.act_window">
+        <field name="name">Document Processing</field>
+        <field name="res_model">ai_digitization.processor</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Main Menu -->
+    <menuitem id="menu_ai_digitization_root" name="AI Digitization" sequence="100"/>
+    <menuitem id="menu_ai_digitization_config" name="Configuration" parent="menu_ai_digitization_root" sequence="10"/>
+    <menuitem id="menu_ai_digitization_template" name="Templates" parent="menu_ai_digitization_config" action="action_ai_digitization_template" sequence="10"/>
+    <menuitem id="menu_ai_digitization_processor" name="Document Processing" parent="menu_ai_digitization_root" action="action_ai_digitization_processor" sequence="20"/>
+</odoo>
