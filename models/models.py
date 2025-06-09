@@ -40,7 +40,7 @@ class AIDigitizationTemplate(models.Model):
         ('gemini-1.5-pro', 'Gemini 1.5 Pro'),
         ('gemini-1.5-flash', 'Gemini 1.5 Flash'),
     ], string='AI Model', required=True, default='gemini-2.0-flash')
-    api_key = fields.Char('API Key', help="API Key for the selected AI model", default="AIzaSyC77rEv-v4cqPEPW15cKLhJunsislDrivo")
+    api_key = fields.Char('API Key', help="API Key for the selected AI model", default="your_key_is_here")
     field_mappings = fields.One2many('ai_digitization.field.mapping', 'template_id', string='Field Mappings')
     
     @api.model
