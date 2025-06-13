@@ -11,6 +11,14 @@ This module provides a reusable mixin that can be injected into any model to ena
 automatic AI document extraction when a PDF/image is uploaded.
     """,
     'depends': ['base', 'mail', 'hr', 'ai'],
+    'external_dependencies': {
+        'python': [
+            'requests',         # For API requests to AI services
+            'python-dateutil',  # For JSON processing
+            'PyPDF2',           # For handling PDF documents
+            'Pillow',           # For image processing
+        ],
+    },
     'data': [
         'security/ir.model.access.csv',
         'wizards/ai_extraction_wizard_views.xml',
