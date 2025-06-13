@@ -1,0 +1,14 @@
+# Required Python dependencies for ai_document_extraction module
+# These are in addition to standard Odoo requirements
+
+# For API requests to AI services
+requests>=2.25.0
+
+# For JSON processing
+python-dateutil>=2.7.0
+
+# For handling PDF documents (if extraction from PDFs is needed)
+PyPDF2>=2.0.0
+
+# For image processing (if extraction from images is needed)
+Pillow>=8.0.0
