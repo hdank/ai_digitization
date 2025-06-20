@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Extend AI Agent form view to show our custom field -->
+    <record id="view_ai_agent_form_inherit" model="ir.ui.view">
+        <field name="name">ai.agent.form.inherit</field>
+        <field name="model">ai.agent</field>
+        <field name="inherit_id" ref="ai.ai_agent_view_form"/>
+        <field name="arch" type="xml">
+            <field name="llm_model" position="after">
+                <field name="is_document_extraction"/>
+            </field>
+        </field>
+    </record>
+</odoo>

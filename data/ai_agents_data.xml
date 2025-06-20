@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Default AI Agent for Document Extraction -->
+        <record id="ai_agent_document_extraction" model="ai.agent">
+            <field name="name">Document Extraction Assistant</field>
+            <field name="subtitle">AI Agent specialized in extracting data from documents</field>
+            <field name="system_prompt">You are an AI assistant specialized in extracting structured data from documents. When a user uploads documents and asks for extraction, analyze the content and return the information in a clear, structured JSON format. Focus on identifying key fields like names, dates, amounts, addresses, and other relevant data points.</field>
+            <field name="llm_model">gpt-4</field>
+            <field name="response_style">analytical</field>
+            <field name="is_document_extraction" eval="True"/>
+        </record>
+
+        <!-- General Purpose AI Agent -->
+        <record id="ai_agent_general" model="ai.agent">
+            <field name="name">General AI Assistant</field>
+            <field name="subtitle">General purpose AI assistant for various tasks</field>
+            <field name="system_prompt">You are a helpful AI assistant. You can help with document analysis, answering questions, and providing information based on the context provided.</field>
+            <field name="llm_model">gpt-4</field>
+            <field name="response_style">balanced</field>
+            <field name="is_document_extraction" eval="False"/>
+        </record>
+
+        <!-- Gemini 2.0 Flash Agent for Advanced Document Processing -->
+        <record id="ai_agent_gemini_flash" model="ai.agent">
+            <field name="name">Gemini 2.0 Flash</field>
+            <field name="subtitle">Advanced document processing with Gemini 2.0 Flash</field>
+            <field name="system_prompt">You are an advanced AI assistant powered by Gemini 2.0 Flash, specialized in document analysis and data extraction. You can process complex documents and provide detailed insights and structured data extraction.</field>
+            <field name="llm_model">gemini-2.0-flash</field>
+            <field name="response_style">analytical</field>
+            <field name="is_document_extraction" eval="True"/>
+        </record>
+    </data>
+</odoo>

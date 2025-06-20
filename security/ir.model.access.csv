@@ -1,2 +1,2 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_ai_extraction_wizard_user,ai.extraction.wizard.user,model_ai_extraction_wizard,base.group_user,1,1,1,1
+access_choose_agent_wizard,access_choose_agent_wizard,model_choose_agent_wizard,base.group_user,1,1,1,1

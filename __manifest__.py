@@ -1,29 +1,29 @@
+# -*- coding: utf-8 -*-
 {
-    'name': 'AI Document Extraction Mixin',
+    'name': 'AI Document Extraction',
     'version': '1.0',
-    'category': 'Productivity/Documents',
-    'summary': 'Reusable mixin for AI-powered document extraction',
-    'author': 'Custom Development',
+    'category': 'Productivity',
+    'summary': 'AI-powered document extraction with agent selection',
+    'author': 'Leonix',
     'description': """
-AI Document Extraction Mixin
-============================
-This module provides a reusable mixin that can be injected into any model to enable 
-automatic AI document extraction when a PDF/image is uploaded.
+        This module extends the AI functionality to provide:
+        - Agent selection wizard when clicking AI button
+        - Custom Gemini 2.0 Flash model support
+        - Document extraction capabilities
+        - Enhanced chat experience with AI agents
     """,
-    'depends': ['base', 'mail', 'hr', 'ai'],
-    'external_dependencies': {
-        'python': [
-            'requests',         # For API requests to AI services
-            'python-dateutil',  # For JSON processing
-            'PyPDF2',           # For handling PDF documents
-            'Pillow',           # For image processing
-        ],
-    },
+    'depends': ['base', 'mail', 'ai'],
     'data': [
         'security/ir.model.access.csv',
-        'wizards/ai_extraction_wizard_views.xml',
-        'views/ai_document_mixin_views.xml',
+        'data/ai_agents_data.xml',
+        'views/choose_agent_wizard_views.xml',
+        'views/ai_agent_views.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'ai_document_extraction/static/src/js/chatter_ai_patch.js',
+        ],
+    },
     'installable': True,
     'application': False,
     'auto_install': False,

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_choose_agent_wizard_form" model="ir.ui.view">
+        <field name="name">choose.agent.wizard.form</field>
+        <field name="model">choose.agent.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Choose AI Agent">
+                <field name="state" invisible="1"/>
+                <field name="original_params" invisible="1"/>
+                
+                <!-- Selection State -->
+                <group invisible="state != 'select'">
+                    <group>
+                        <field name="action_type" widget="radio" options="{'horizontal': true}"/>
+                        <field name="agent_id" options="{'no_create': True}" invisible="action_type != 'extract'" />
+                    </group>
+                </group>
+                
+                <!-- Result State -->
+                <group invisible="state != 'result'">
+                    <group>
+                        <field name="extraction_result" widget="text" readonly="1"/>
+                    </group>
+                </group>
+                
+                <footer>
+                    <!-- Selection State Buttons -->
+                    <div invisible="state != 'select'">
+                        <button string="Start Process" name="action_start_process" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </div>
+                    
+                    <!-- Result State Buttons -->
+                    <div invisible="state != 'result'">
+                        <button string="Back to Selection" name="action_back_to_selection" type="object" class="btn-secondary"/>
+                        <button string="Close" class="btn-primary" special="cancel"/>
+                    </div>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
