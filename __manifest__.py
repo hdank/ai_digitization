@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': 'AI Document Extraction',
+    'name': 'AI Digitization',
     'version': '1.0',
     'category': 'Productivity',
     'summary': 'AI-powered document extraction with agent selection',
@@ -21,7 +21,7 @@
     ],
     'assets': {
         'web.assets_backend': [
-            'ai_document_extraction/static/src/js/chatter_ai_patch.js',
+            'ai_digitization/static/src/js/chatter_ai_patch.js',
         ],
     },
     'installable': True,
